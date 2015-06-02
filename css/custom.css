@@ -1,0 +1,251 @@
+p, a, h1, h2, h3, h4, h5, h6 {
+	font-family: 'Open Sans', sans-serif;
+}
+
+#loadingoverlay {
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	background: rgba(0,0,0,0.75);
+	display: none;
+	
+}
+
+#hugger {
+	color: #e1e1e1;
+	background: rgba(0,0,0,0.85);
+	border-top: 1px solid #a5a5a5;
+	text-align: center;
+	left: 0;
+	right: 0;
+	height: 40px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	position: fixed;
+	bottom: 0;
+}
+
+#hugger h6 {
+	display: inline-block;
+	margin: 0;
+	padding: 0;
+	line-height: 40px;
+}
+
+#loaddone, #error {
+	position: absolute;
+	margin-top: 3px;
+	display: inline-block;
+	height: 30px;
+}
+
+#loaddone img, #error img {
+	margin-left: 20px;
+	display: none;
+	width: inherit;
+	height: inherit;
+}
+
+#login {
+	margin-top: 200px;
+}
+
+#login h1 {
+	color: #f5f5f5;
+}
+
+#login h5 {
+	color: #a1a1a1;
+}
+
+#loginbtn {
+	cursor: pointer;
+}
+
+.container {
+	max-width: 1200px;
+}
+
+#loggedin, #login {
+	display: none;
+}
+
+body {
+	background-color: #272822;
+	background-image: url("../images/dark_tile.png")
+}
+
+.columns {
+	padding: 0;
+	margin-left: 0;
+	margin-bottom: 10px;
+}
+
+.entry {
+	height: 125px;
+	background: rgba(0,0,0,0.75);
+	border: 1px solid #1c1c1f;
+	position: relative;
+	overflow: hidden;
+}
+
+.playlistImg {
+	margin-top: 15px;
+	margin-left: 15px;
+	display: none;
+	height: 120px;
+	width: 120px;
+}
+
+.playlistImg img {
+	height: inherit;
+}
+
+.content {
+	height: 120px;
+	margin-top: 15px;
+	margin-left: 20px;
+	position: absolute;
+	display: inline-block;
+}
+
+.active {
+	border: 2px solid rgb(132,189,0);
+}
+
+.active .content {
+	margin-top: 14px;
+}
+
+.active .playlistImg {
+	margin-top: 14px;
+	margin-left: 14px;
+}
+
+.content h5 {
+	top: 0;
+	color: #a1a1a1;
+}
+
+.content h3 {
+	top: 0;
+	color: #f3f3f3;
+}
+
+.content h3, .content h5 {
+	margin: 0;
+	padding: 0;
+}
+
+#title {
+	margin-top: 20px;
+	color: #f8f8f8;
+}
+
+#helper {
+	margin-bottom:20px;
+	color: #c8c8c8;
+}
+
+#generate {
+	margin-top: 10px;
+}
+
+#generate label {
+	color: #a1a1a1;
+}
+
+#generate #submit {
+	margin-left: 0;
+	height: 38px;
+	width: 158px;
+	display: block;
+	margin-bottom: 10px;
+}
+
+#generate h5 {
+	color: #a1a1a1;
+}
+
+#createrow {
+	width: 100% !important;
+	display: block;
+}
+
+#playlistName {
+	width: 100%;
+	display:block;
+}
+
+#creator p {
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+	color: #f5f5f5;
+	padding: 0;
+}
+
+#creator a {
+	margin: 0;
+	color: #a5a5a5;
+	padding: 0;
+}
+
+#creator span {
+	float: right;
+}
+
+
+@media (max-width: 1199px) {
+	.six {
+		width: 100% !important;
+	}
+}
+
+@media (min-width: 500px) {
+	#createrow {
+		width: 100% !important;
+		display: flex;
+	    flex-direction: row;
+	}
+	#playlistName {
+		width: auto;
+		display:inline-block;
+	    list-style: none;
+	    flex-grow: 1;
+	}
+	#generate #submit {
+		margin-left: 10px;
+		height: 38px;
+		width: auto;
+		margin-bottom: 0;
+	}
+	#creator span {
+		float: right;
+	}
+}
+
+@media (min-width: 400px) {
+	.playlistImg {
+		display: inline-block;
+	}
+	.entry {
+		height: 150px !important;
+	}
+}
+
+@media (min-width: 1200px) {
+	.columns {
+		padding: 0;
+		margin-left: 5px;
+		margin-right: 5px;
+		margin-bottom: 10px;
+	}
+	.six {
+		width : 48% !important;
+	}
+	#title {
+		margin-top: 80px;
+	}
+}
