@@ -85,18 +85,27 @@ body {
 
 .entry {
 	height: 10rem;
-	background: rgba(0,0,0,0.75);
+	background: #f2f1ef;
+	background: -moz-linear-gradient(top, #f2f1ef 0%, #dedbd2 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f2f1ef), color-stop(100%,#dedbd2));
+	background: -webkit-linear-gradient(top, #f2f1ef 0%,#dedbd2 100%);
+	background: -o-linear-gradient(top, #f2f1ef 0%,#dedbd2 100%);
+	background: -ms-linear-gradient(top, #f2f1ef 0%,#dedbd2 100%);
+	background: linear-gradient(to bottom, #f2f1ef 0%,#dedbd2 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f1ef', endColorstr='#dedbd2',GradientType=0 );
 	border: 0.1rem solid #1c1c1f;
 	position: relative;
 	overflow: hidden;
+	border-radius: 0.2rem;
 }
 
 .playlistImg {
-	margin-top: 1rem;
+	margin-top: 0.8rem;
 	margin-left: 1rem;
 	display: inline-block;
 	height: 8rem;
 	width: 8rem;
+	border: 0.05rem solid #4C4C4C;
 }
 
 .playlistImg img {
@@ -111,28 +120,30 @@ body {
 	display: inline-block;
 }
 
-.active {
-	border: 0.2rem solid rgb(132,189,0);
-}
-
-.active .content {
-	margin-top: 0.9rem;
-}
-
 .active .playlistImg {
-	margin-top: 0.9rem;
-	margin-left: 0.9rem;
+	margin-left: 2.5rem;
+}
+
+.selected {
+	width: 1.5rem;
+	position: absolute;
+	left:0;
+	top:0;
+	height: 10rem;
+	display: none;
+	background: rgb(132,189,0);
+	border-radius: 0.1rem 0 0 0.1rem;
 }
 
 .content h5 {
 	top: 0;
-	color: #a1a1a1;
+	color: #4A4A4A;
 	font-size: 1.5rem;
 }
 
 .content h3 {
 	top: 0;
-	color: #f3f3f3;
+	color: #272727;
 	font-size: 2rem;
 	margin-bottom: 0.3rem !important;
 }

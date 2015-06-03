@@ -54,6 +54,7 @@ $(document).on('click', '#loadingoverlay', function(){
 
 /* PLAYLIST SELECTION */
 $(document).on('click', '.entry', function(){
+	jQuery(this).find(".selected").toggle();
 	$(this).toggleClass("active");
 	getSelected();
 })
