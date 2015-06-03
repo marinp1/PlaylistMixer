@@ -1,4 +1,4 @@
-p, a, h1, h2, h3, h4, h5, h6, input {
+p, a, h1, h2, h3, h4, h5, h6, input, label {
 	font-family: 'Roboto', sans-serif;
 }
 
@@ -52,8 +52,9 @@ p, a, h1, h2, h3, h4, h5, h6, input {
 	margin-top: 20rem;
 }
 
-#login h1 {
-	letter-spacing: 0.2rem;
+#login h3 {
+	letter-spacing: 0.15rem;
+	font-weight: 300;
 	color: #f5f5f5;
 }
 
@@ -102,12 +103,12 @@ body {
 }
 
 .playlistImg {
-	margin-top: 0.8rem;
+	margin-top: 0.9rem;
 	margin-left: 1rem;
 	display: inline-block;
 	height: 8rem;
 	width: 8rem;
-	border: 0.05rem solid #4C4C4C;
+	border: 0.1rem solid #656565;
 }
 
 .playlistImg img {
@@ -141,12 +142,14 @@ body {
 	top: 0;
 	color: #4A4A4A;
 	font-size: 1.5rem;
+	font-weight: 300;
 }
 
 .content h3 {
 	top: 0;
 	color: #272727;
 	font-size: 2rem;
+	font-weight: 300;
 	margin-bottom: 0.3rem !important;
 }
 
@@ -159,11 +162,18 @@ body {
 	letter-spacing: 0.2rem;
 	margin-top: 1.5rem;
 	color: #f8f8f8;
+	font-weight: 300;
+	font-size: 3rem;
 }
 
 #helper {
 	margin-bottom: 1.5rem;
 	color: #c8c8c8;
+	font-weight: 100;
+}
+
+label {
+	font-weight: 100;
 }
 
 #generate {
@@ -185,6 +195,7 @@ body {
 #generate h5 {
 	color: #a1a1a1;
 	font-size: 2rem;
+	font-weight: 100;
 }
 
 #createrow {
@@ -199,21 +210,23 @@ body {
 
 #creator p {
 	margin-top: 1rem;
-	margin-bottom: 1rem;
+	margin-bottom: 0rem;
 	color: #f5f5f5;
 	padding: 0;
+	font-weight: 100;
+	display: block;
 }
 
 #creator a {
 	margin: 0;
 	color: #a5a5a5;
 	padding: 0;
+	font-weight: 100;
 }
 
-#creator span {
-	float: right;
+#note {
+	margin-bottom: 1.5rem !important;
 }
-
 
 @media (max-width: 1199px) {
 	.four {
@@ -239,9 +252,6 @@ body {
 		width: auto;
 		margin-bottom: 0;
 	}
-	#creator span {
-		float: right;
-	}
 }
 
 @media (min-width: 1200px) {
@@ -256,5 +266,16 @@ body {
 	}
 	#title {
 		margin-top: 4rem;
+	}
+}
+
+@media (min-width: 1000px) {
+	#creator p {
+		margin-bottom: 1.5rem;
+		display: inline-block;
+		float: left;
+	}
+	#note {
+		float: right !important;
 	}
 }
