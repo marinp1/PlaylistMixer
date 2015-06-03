@@ -1,5 +1,5 @@
-p, a, h1, h2, h3, h4, h5, h6 {
-	font-family: 'Open Sans', sans-serif;
+p, a, h1, h2, h3, h4, h5, h6, input {
+	font-family: 'Roboto', sans-serif;
 }
 
 #loadingoverlay {
@@ -53,6 +53,7 @@ p, a, h1, h2, h3, h4, h5, h6 {
 }
 
 #login h1 {
+	letter-spacing: 0.2rem;
 	color: #f5f5f5;
 }
 
@@ -61,6 +62,8 @@ p, a, h1, h2, h3, h4, h5, h6 {
 }
 
 #loginbtn {
+	height: auto;
+	width: 200px;
 	cursor: pointer;
 }
 
@@ -93,7 +96,6 @@ body {
 	background: -ms-linear-gradient(top, #f2f1ef 0%,#dedbd2 100%);
 	background: linear-gradient(to bottom, #f2f1ef 0%,#dedbd2 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f1ef', endColorstr='#dedbd2',GradientType=0 );
-	border: 0.1rem solid #1c1c1f;
 	position: relative;
 	overflow: hidden;
 	border-radius: 0.2rem;
@@ -154,6 +156,7 @@ body {
 }
 
 #title {
+	letter-spacing: 0.2rem;
 	margin-top: 1.5rem;
 	color: #f8f8f8;
 }
