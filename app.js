@@ -228,13 +228,13 @@ function getPlaylists() {
 				var end = Math.floor(lists.length / 3);
 				appendRow(end);
 				$("#playlists").append($('<div class="row">'+ playlistTemplate(lists[lists.length - 1]) + '</div>'));
-				getPlayTime(lists[lists.length - 1].id, lists.length - 1);
+				getPlayTime(lists[lists.length - 1].id, lists.length - 1, lists[lists.length - 1].owner.id);
 			} else {
 				var end = Math.floor(lists.length / 3);
 				appendRow(end);
 				$("#playlists").append($('<div class="row">'+ playlistTemplate(lists[lists.length - 2]) + playlistTemplate(lists[lists.length - 1]) + '</div>'));
-				getPlayTime(lists[lists.length - 2].id, lists.length - 2);
-				getPlayTime(lists[lists.length - 1].id, lists.length - 1);
+				getPlayTime(lists[lists.length - 2].id, lists.length - 2, lists[lists.length - 2].owner.id);
+				getPlayTime(lists[lists.length - 1].id, lists.length - 1, lists[lists.length - 1].owner.id);
 			}
 
 			function appendRow(end) {
@@ -245,9 +245,9 @@ function getPlaylists() {
 
 					$("#playlists").append($('<div class="row">'+ playlistTemplate(data1) + playlistTemplate(data2) + playlistTemplate(data3) + '</div>'));
 
-					getPlayTime(data1.id, i * 3);
-					getPlayTime(data2.id, i * 3 + 1);
-					getPlayTime(data3.id, i * 3 + 2);
+					getPlayTime(data1.id, i * 3, data1.owner.id);
+					getPlayTime(data2.id, i * 3 + 1, data2.owner.id);
+					getPlayTime(data3.id, i * 3 + 2, data3.owner.id);
 				}
 			}
 		}
@@ -289,14 +289,28 @@ if (error) {
 }
 
 /* Get information about playlist */
-function getPlayTime(id, toapply) {
+function getPlayTime(id, toapply, ownerID) {
 	var result = 0;
 	var tracks = [];
 
+	function getListData() {
+		$.ajax({
+			url: 'https://api.spotify.com/v1/users/' + ownerID +  '/playlists/' + id,
+			headers: {
+				'Authorization': 'Bearer ' + access_token
+			},
+			success: function(data) {
+				if (data.images.length > 0) {
+					var imgSrc = data.images[0].url;
+					$('.compimg:eq('+toapply+')').attr('src', imgSrc);
+				}
+			}
+		});
+	}
 
 	function getList(offset, callback) {
 		$.ajax({
-			url: 'https://api.spotify.com/v1/users/' + username +  '/playlists/' + id + '/tracks?offset=' + offset,
+			url: 'https://api.spotify.com/v1/users/' + ownerID +  '/playlists/' + id + '/tracks?offset=' + offset,
 			headers: {
 				'Authorization': 'Bearer ' + access_token
 			},
@@ -327,6 +341,8 @@ function getPlayTime(id, toapply) {
 	}
 
 	getList(0, getListCallback);
+
+	getListData();
 
 }
 
