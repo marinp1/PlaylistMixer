@@ -221,30 +221,33 @@ function getPlaylists() {
 			var lists = response.items;
 			var playlistTemplate = document.getElementById('playlist-template').innerHTML
 			var playlistTemplate = Handlebars.compile(playlistTemplate)
-			if (lists.length % 2 == 0) {
-				for (i=0;i<lists.length / 2;i++) {
-					var data1 = lists[i * 2];
-					var data2 = lists[i * 2 + 1];
-
-					$("#playlists").append($('<div class="row">'+ playlistTemplate(data1) + playlistTemplate(data2) + '</div>'));
-
-					getPlayTime(data1.id, i * 2);
-					getPlayTime(data2.id, i * 2 + 1);
-				}
-			} else {
-				var end = Math.floor(lists.length / 2);
-				for (i=0;i<end;i++) {
-					var data1 = lists[i * 2];
-					var data2 = lists[i * 2 + 1];
-
-					$("#playlists").append($('<div class="row">'+ playlistTemplate(data1) + playlistTemplate(data2) + '</div>'));
-
-					getPlayTime(data1.id, i * 2);
-					getPlayTime(data2.id, i * 2 + 1);
-				}
+			if (lists.length % 3 == 0) {
+				appendRow(lists.length / 3);
+			} else if (lists.length % 3 == 1){
+				var end = Math.floor(lists.length / 3);
+				appendRow(end);
 				$("#playlists").append($('<div class="row">'+ playlistTemplate(lists[lists.length - 1]) + '</div>'));
-
 				getPlayTime(lists[lists.length - 1].id, lists.length - 1);
+			} else {
+				var end = Math.floor(lists.length / 3);
+				appendRow(end);
+				$("#playlists").append($('<div class="row">'+ playlistTemplate(lists[lists.length - 2]) + playlistTemplate(lists[lists.length - 1]) + '</div>'));
+				getPlayTime(lists[lists.length - 2].id, lists.length - 2);
+				getPlayTime(lists[lists.length - 1].id, lists.length - 1);
+			}
+
+			function appendRow(end) {
+				for (i=0;i<end;i++) {
+					var data1 = lists[i * 3];
+					var data2 = lists[i * 3 + 1];
+					var data3 = lists[i * 3 + 2];
+
+					$("#playlists").append($('<div class="row">'+ playlistTemplate(data1) + playlistTemplate(data2) + playlistTemplate(data3) + '</div>'));
+
+					getPlayTime(data1.id, i * 3);
+					getPlayTime(data2.id, i * 3 + 1);
+					getPlayTime(data3.id, i * 3 + 2);
+				}
 			}
 		}
 	});
