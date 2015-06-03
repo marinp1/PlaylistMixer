@@ -190,13 +190,34 @@ function getSelected() {
 	var minutes = Math.floor(totalDur / 1000 / 60);
 	var hours = Math.floor(minutes / 60);
 	minutes = minutes - hours*60;
+
 	var durationText = "";
-	if (hours > 0) {
-		durationText = hours + " hours and " + minutes + " minutes."
-	} else {
-		durationText = minutes + " minutes."
+	if (hours == 1) {
+		durationText += hours + " hour and ";
+	} else if (hours > 1) {
+		durationText += hours + " hours and ";
 	}
-	var selectedText = selected.length + " playlists selected, with a total of " + totalTracks + " unique tracks and run time of " + durationText;
+	if (minutes == 1) {
+		durationText += minutes + " minute."
+	} else {
+		durationText += minutes + " minutes."
+	}
+
+	var trackcount = "";
+	if (totalTracks.length == 1) {
+		trackcount = " unique track"
+	} else {
+		trackcount = " unique tracks"
+	}
+
+	var playlistcount = "";
+	if (selected.length == 1) {
+		playlistcount = " playlist"
+	} else {
+		playlistcount = " playlists"
+	}
+
+	var selectedText = selected.length + playlistcount + " selected, with a total of " + totalTracks + trackcount + " and run time of " + durationText;
 	$("#infotext").text(selectedText);
 
 }
@@ -213,47 +234,54 @@ function getHashParams() {
 
 /* FETCH AND DISPLAY PLAYLISTS */
 function getPlaylists() {
-	$.ajax({
-		url: 'https://api.spotify.com/v1/users/' + username +  '/playlists',
-		headers: {
-			'Authorization': 'Bearer ' + access_token
-		},
-		success: function(response) {
-			var lists = response.items;
-			var playlistTemplate = document.getElementById('playlist-template').innerHTML
-			var playlistTemplate = Handlebars.compile(playlistTemplate)
-			if (lists.length % 3 == 0) {
-				appendRow(lists.length / 3);
-			} else if (lists.length % 3 == 1){
-				var end = Math.floor(lists.length / 3);
-				appendRow(end);
-				$("#playlists").append($('<div class="row">'+ playlistTemplate(lists[lists.length - 1]) + '</div>'));
-				getPlayTime(lists[lists.length - 1].id, lists.length - 1, lists[lists.length - 1].owner.id);
-			} else {
-				var end = Math.floor(lists.length / 3);
-				appendRow(end);
-				$("#playlists").append($('<div class="row">'+ playlistTemplate(lists[lists.length - 2]) + playlistTemplate(lists[lists.length - 1]) + '</div>'));
-				getPlayTime(lists[lists.length - 2].id, lists.length - 2, lists[lists.length - 2].owner.id);
-				getPlayTime(lists[lists.length - 1].id, lists.length - 1, lists[lists.length - 1].owner.id);
-			}
+	var limit = 24;
+	var playlistTemplate = document.getElementById('playlist-template').innerHTML
+	var playlistTemplate = Handlebars.compile(playlistTemplate)
+	function inner(offset) {
+		$.ajax({
+			url: 'https://api.spotify.com/v1/users/' + username +  '/playlists?limit=' + limit + '&offset=' + offset,
+			headers: {
+				'Authorization': 'Bearer ' + access_token
+			},
+			success: function(response) {
+				var lists = response.items;
+				if (lists.length % 3 == 0) {
+					appendRow(lists.length / 3);
+				} else if (lists.length % 3 == 1){
+					var end = Math.floor(lists.length / 3);
+					if (lists.length > 3) appendRow(end);
+					$("#playlists").append($('<div class="row">'+ playlistTemplate(lists[lists.length - 1]) + '</div>'));
+					getPlayTime(lists[lists.length - 1].id, lists.length - 1 + offset, lists[lists.length - 1].owner.id);
+				} else {
+					var end = Math.floor(lists.length / 3);
+					if (lists.length > 3) appendRow(end);
+					$("#playlists").append($('<div class="row">'+ playlistTemplate(lists[lists.length - 2]) + playlistTemplate(lists[lists.length - 1]) + '</div>'));
+					getPlayTime(lists[lists.length - 2].id, lists.length - 2 + offset, lists[lists.length - 2].owner.id);
+					getPlayTime(lists[lists.length - 1].id, lists.length - 1 + offset, lists[lists.length - 1].owner.id);
+				}
 
-			function appendRow(end) {
-				for (i=0;i<end;i++) {
-					var data1 = lists[i * 3];
-					var data2 = lists[i * 3 + 1];
-					var data3 = lists[i * 3 + 2];
+				function appendRow(end) {
+					for (i=0;i<end;i++) {
+						var data1 = lists[i * 3];
+						var data2 = lists[i * 3 + 1];
+						var data3 = lists[i * 3 + 2];
 
-					$("#playlists").append($('<div class="row">'+ playlistTemplate(data1) + playlistTemplate(data2) + playlistTemplate(data3) + '</div>'));
+						$("#playlists").append($('<div class="row">'+ playlistTemplate(data1) + playlistTemplate(data2) + playlistTemplate(data3) + '</div>'));
 
-					getPlayTime(data1.id, i * 3, data1.owner.id);
-					getPlayTime(data2.id, i * 3 + 1, data2.owner.id);
-					getPlayTime(data3.id, i * 3 + 2, data3.owner.id);
+						getPlayTime(data1.id, i * 3 +	  offset, data1.owner.id);
+						getPlayTime(data2.id, i * 3 + 1 + offset, data2.owner.id);
+						getPlayTime(data3.id, i * 3 + 2 + offset, data3.owner.id);
+					}
+				}
+
+				if (response.next !== null) {
+					inner(offset + limit);
 				}
 			}
-		}
-	});
+		});
+	}
+	inner(0);
 }
-
 
 /* On page load ask for login or show playlists */
 var params = getHashParams();
@@ -332,8 +360,24 @@ function getPlayTime(id, toapply, ownerID) {
 			var minutes = Math.floor((result / 1000) / 60);
 			var hours = Math.floor(minutes / 60);
 			minutes = minutes - hours * 60;
-			var full = hours + " hours, " + minutes + " minutes"
-			$('.comptracks:eq('+toapply+')').text(tracks.length + " songs");
+			var full = "";
+			if (hours == 1) {
+				full += hours + " hour, "
+			} else if (hours > 1) {
+				full += hours + " hours, "
+			}
+			if (minutes == 1) {
+				full += minutes + " minute"
+			} else {
+				full += minutes + " minutes"
+			}
+			var trackcount = ""
+			if (tracks.length == 1) {
+				trackcount = "1 song"
+			} else {
+				trackcount = tracks.length + " songs"
+			}
+			$('.comptracks:eq('+toapply+')').text(trackcount);
 			$('.complength:eq('+toapply+')').text(full);
 		} else {
 			getList(offset + 100, getListCallback);
