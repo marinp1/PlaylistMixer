@@ -6,10 +6,12 @@ var scopes = 'user-read-private playlist-read-private playlist-read-collaborativ
 
 /* Redirect to Spotify authorization */
 function login() {
+	var state = randomString(15);
 	var url = 'https://accounts.spotify.com/authorize?client_id=' + client_id +
 		'&response_type=token' +
 		'&scope=' + encodeURIComponent(scopes) +
-		'&redirect_uri=' + encodeURIComponent(redirect_uri);
+		'&redirect_uri=' + encodeURIComponent(redirect_uri) +
+		'&state=' + state;
 	window.location.replace(url);
 }
 	
@@ -18,6 +20,17 @@ var selected = [];
 var username = "";
 var playlist = "";
 var canclose = true;
+
+/* RANDOM STRING GENERATOR */
+function randomString(length) {
+	var chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+	var s = ""
+	for (i=0;i<length;i++) {
+		var index = Math.floor(Math.random() * chars.length);
+		s += chars[index];
+	}
+	return s;
+}
 
 /* LOGIN WITH SPOTIFY */
 $(document).on('click', '#loginbtn', function(){
