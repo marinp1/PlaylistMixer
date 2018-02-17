@@ -1,5 +1,6 @@
 # PlaylistMixer
-A Spotify web application to merge playlists.
+A Spotify web application
 
-## Update 2018-01-01
-I recreated the application with TypesScript and React, see new source here: [PlaylistMixer](https://github.com/marinp1/patrikmarin.fi/tree/master/src/client/src/apps/PlaylistMixer)
+Recreated version of [PlaylistMixer](https://github.com/marinp1/PlaylistMixer) with TypeScript and React. Should be more stable and overall better.
+
+In addition of combining lists together the applicaiton also supports removal of duplicate tracks. Tracks with unique IDs are removed automatically and tracks with same name and artist are able to be resolved by user.
