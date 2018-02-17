@@ -4,7 +4,7 @@
   "scripts": {
     "start-client": "cd src/client && yarn start",
     "watch-server": "nodemon --watch 'src/server.ts' --exec 'ts-node' src/server.ts",
-    "start": "ts-node src/server.ts",
+    "start": "node src/server.js",
     "dev": "concurrently --kill-others-on-fail \"yarn watch-server\" \"yarn start-client\"",
     "heroku-postbuild": "cd src/client && yarn --production=false && yarn run build"
   },
