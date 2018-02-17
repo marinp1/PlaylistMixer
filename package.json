@@ -1,4 +1,6 @@
 {
+  "name": "playlist-mixer-server",
+  "version": "0.1.0",
   "scripts": {
     "start-client": "cd src/client && yarn start",
     "watch-server": "nodemon --watch 'src/server.ts' --exec 'ts-node' src/server.ts",
