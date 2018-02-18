@@ -42,8 +42,9 @@ class PlaylistMixer extends React.Component<{}, PlaylistMixerState> {
   }
 
   render() {
-    document.body.style.backgroundColor = '#272822';
+    document.body.style.backgroundColor = '#111';
     document.body.style.backgroundImage = `url(${require('./images/dark_tile.png')})`;
+    document.body.style.backgroundAttachment = 'fixed';
 
     if (this.state.errorMessage) {
       return (
