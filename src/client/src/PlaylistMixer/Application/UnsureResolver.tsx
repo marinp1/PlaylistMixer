@@ -1,6 +1,7 @@
 import * as React from 'react';
 import glamorous from 'glamorous';
 import { Track } from './classes';
+import { mediaQueries } from './styles';
 import { TrackPair, ResolveResult } from './helpers';
 
 const TrackPairContainer = glamorous.div({
@@ -102,14 +103,23 @@ const Container = glamorous.div({
   alignItems: 'center',
   justifyContent: 'center',
   background: 'rgba(0,0,0,0.8)',
-  paddingTop: '2rem',
-  paddingBottom: '2rem',
+  [mediaQueries.mobile]: {
+    paddingTop: '4rem',
+    paddingBottom: '4rem',
+  },
 });
 
 const ResolverContainer = glamorous.div({
   padding: '2rem !important',
+  paddingTop: '0 !important',
+  paddingBottom: '1rem !important',
   background: '#FFF',
-  borderRadius: '0.3rem',
+  [mediaQueries.untilMobile]: {
+    width: '100% !important',
+  },
+  [mediaQueries.mobile]: {
+    borderRadius: '0.3rem',
+  },
   overflow: 'auto',
   maxHeight: '100%',
 });
@@ -132,13 +142,31 @@ interface UnsureResolverState {
   trackStatus: Map<Track, boolean>;
 }
 
-const CloseButton = glamorous.div({
-  position: 'absolute',
-  top: '2rem',
-  right: '2rem',
-  cursor: 'pointer',
-  ':hover': {
-    opacity: 0.85,
+const StickyDiv = glamorous.div({
+  paddingTop: '2rem',
+  zIndex: 9999,
+  top: 0,
+  position: 'sticky',
+  width: '100%',
+  background: '#FFF',
+  '& div': {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    '& h5': {
+      margin: 0,
+      marginRight: 'auto',
+    },
+    '& i': {
+      cursor: 'pointer',
+      ':hover': {
+        opacity: 0.85,
+      },
+    },
+  },
+  '& p': {
+    paddingBottom: '1rem',
+    margin: 0,
   },
 });
 
@@ -202,18 +230,22 @@ class UnsureResolver extends React.Component<UnsureResolverProps, UnsureResolver
     return (
       <Container className="u-full-width">
         <ResolverContainer className="container">
-          <CloseButton onClick={e => this.props.onClose(undefined)}>
-            <i className="fa fa-times-circle fa-2x" aria-hidden="true"></i>
-          </CloseButton>
-          <Title>{this.props.unsures.length} unsure duplicates</Title>
-          <Subtitle>Select which songs of the duplicates to save to the new playlist</Subtitle>
+
+          <StickyDiv>
+            <div>
+              <Title>{this.props.unsures.length} unsure duplicates</Title>
+              <i className="fa fa-times-circle fa-2x" aria-hidden="true"
+                onClick={e => this.props.onClose(undefined)}/>
+            </div>
+            <Subtitle>Select which songs of the duplicates to save to the new playlist</Subtitle>
+          </StickyDiv>
           {this.props.unsures.map((_) => {
             return (
               <TrackPairComponent key={_.a.id + _.b.id} pair={_}
                 trackStatuses={this.state.trackStatus} onClick={this.handleTrackSelection}/>
             );
           })}
-          <button className="button-primary u-full-width"
+          <button className="button-primary u-full-width" style={{ marginTop: '0.5rem' }}
             onClick={e => this.props.onClose(this.generateResolveResult())}>
             DONE
           </button>
