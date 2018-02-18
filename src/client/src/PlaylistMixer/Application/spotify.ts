@@ -22,7 +22,7 @@ export async function getPlaylistTracks(
     const merged = tracks.concat(response.items.map(_ => new Track(_)));
     
     // Proceed to next page if all tracks haven't been found 
-    if (response.next) { 
+    if (!!response.next) { 
       const nextUrl = url.parse(response.next, true); 
       if (nextUrl.query !== undefined) { 
         const nextOffset = Number((nextUrl.query as ParsedUrlQuery).offset); 
@@ -48,7 +48,7 @@ export async function getUserPlaylists(accessToken: string, id: string) {
     const merged = playlists.concat(lists.items.map(_ => new Playlist(_)));
 
     /// Proceed to next page if all tracks haven't been found 
-    if (lists.next) {
+    if (!!lists.next) {
       const nextUrl = url.parse(lists.next, true);
       if (nextUrl.query !== undefined) {
         const nextOffset = Number((nextUrl.query as ParsedUrlQuery).offset);

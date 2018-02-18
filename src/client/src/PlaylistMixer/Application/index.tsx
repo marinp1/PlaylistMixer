@@ -1,15 +1,17 @@
 import * as React from 'react';
 import glamorous from 'glamorous';
+import { toast, ToastContainer, ToastOptions } from 'react-toastify';
+
 import { getUserId, getUserPlaylists, getPlaylistTracks, createPlaylist } from './spotify';
 import { Playlist, User, Track } from './classes';
 import { getUniquetracks, TrackPair, ResolveResult } from './helpers';
+
 import Loader from './Loader';
 import PlaylistComponent from './PlaylistComponent';
 import StatusTextComponent from './StatusTextComponent';
 import UnsureResolver from './UnsureResolver';
 import CreatePlaylistButton from './CreatePlaylistButton';
 import ResolveDuplicatesButton from './ResolveDuplicatesButton';
-import { toast, ToastContainer, ToastOptions } from 'react-toastify';
 
 const Title = glamorous.h5({
   letterSpacing: '0.2rem',
@@ -184,12 +186,15 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
       const playlists = await getUserPlaylists(this.props.accessToken, user.id);
       this.setState({ playlists });
 
-      for (const playlist of playlists) {
-        const tracks = await getPlaylistTracks(
-          this.props.accessToken, playlist.owner.id, playlist.id);
-        playlist.setTracks(tracks);
-        this.setState({ playlists });
-      }
+      // Make parallel calls to populate playlist data
+      Promise.all(playlists.map((playlist) => {
+        getPlaylistTracks(this.props.accessToken, playlist.owner.id, playlist.id)
+          .then((tracks) => {
+            playlist.setTracks(tracks);
+            this.setState({ playlists });
+          });
+      }));
+
     } catch (err) {
       this.errorHandler(err);
     }
