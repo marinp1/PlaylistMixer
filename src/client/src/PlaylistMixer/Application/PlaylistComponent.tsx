@@ -8,12 +8,29 @@ const COMPONENT_SIZE = 6; // rem
 const COMPONENT_PADDING = 1; // rem
 
 const Wrapper = glamorous.div({
+  boxSizing: 'border-box',
   width: '100%',
+  paddingRight: '0.8rem',
+  ':nth-child(1n+1)': {
+    paddingRight: 0,
+  },
   [mediaQueries.tablet]: {
     width: '50%',
+    ':nth-child(1n+1)': {
+      paddingRight: '0.8rem',
+    },
+    ':nth-child(2n+2)': {
+      paddingRight: 0,
+    },
   },
   [mediaQueries.desktop]: {
     width: '33.33%',
+    ':nth-child(1n+1), :nth-child(2n+2)': {
+      paddingRight: '0.8rem',
+    },
+    ':nth-child(3n+3)': {
+      paddingRight: 0,
+    },
   },
 });
 
@@ -30,7 +47,6 @@ const Selector = glamorous.div({
 const Container = glamorous.div({
   height: `${COMPONENT_SIZE}rem`,
   marginBottom: '0.8rem',
-  marginRight: '0.8rem',
   padding: `${COMPONENT_PADDING}rem`,
   borderRadius: '0.2rem',
   display: 'flex',
