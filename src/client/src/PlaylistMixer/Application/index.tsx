@@ -74,6 +74,15 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
     this.handleSearchChange = this.handleSearchChange.bind(this);
   }
 
+  errorHandler(err: any) {
+    try {
+      const error = JSON.parse(err.response).error;
+      this.props.errorHandler(`${err.status} ${err.statusText}: ${error.message}`);
+    } catch (e)  {
+      console.error(err);
+    }
+  }
+
   handleSearchChange(value: string) {
     this.setState({ searchValue: value });
   }
@@ -120,13 +129,14 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
     toastOptions.autoClose = false;
     toast.info(`Creating playlist ${name}...`, toastOptions);
 
-    const createdList = await createPlaylist(this.props.accessToken, this.state.user.id, listName,
-                                             this.state.selectedTracks, this.props.errorHandler);
-    if (createdList !== undefined) {
+    try {
+      const createdList = await createPlaylist(
+        this.props.accessToken, this.state.user.id, listName, this.state.selectedTracks);
       toast.dismiss();
       this.refreshPage(createdList.name);
-    } else {
+    } catch (e) {
       toast.error(`Error with creating playlist!`);
+      this.errorHandler(e);
     }
   }
 
@@ -167,20 +177,21 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
 
   // Get user and playlist data
   async fetchData() {
-    const user = await getUserId(this.props.accessToken, this.props.errorHandler);
-    if (user !== undefined) {
+    try {
+      const user = await getUserId(this.props.accessToken);
       this.setState({ user });
-      const playlists = await getUserPlaylists(
-        this.props.accessToken, user.id, this.props.errorHandler);
+
+      const playlists = await getUserPlaylists(this.props.accessToken, user.id);
       this.setState({ playlists });
-      if (!!playlists) {
-        for (const playlist of playlists) {
-          const tracks = await getPlaylistTracks(this.props.accessToken, playlist.owner.id,
-                                                 playlist.id, this.props.errorHandler);
-          if (!!tracks) playlist.setTracks(tracks);
-          this.setState({ playlists });
-        }
+
+      for (const playlist of playlists) {
+        const tracks = await getPlaylistTracks(
+          this.props.accessToken, playlist.owner.id, playlist.id);
+        playlist.setTracks(tracks);
+        this.setState({ playlists });
       }
+    } catch (err) {
+      this.errorHandler(err);
     }
   }
 
