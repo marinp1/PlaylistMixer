@@ -1,7 +1,6 @@
 import * as React from 'react';
 import glamorous from 'glamorous';
 
-const CLIENT_ID = '65f99b0c4a234b4db6ce2f3e9084fb44';
 const SCOPES = ['user-read-private',
   'playlist-read-private', 'playlist-read-collaborative',
   'playlist-modify-public', 'playlist-modify-private',
@@ -17,12 +16,12 @@ function generateRandomString(length: number) {
   return s;
 }
 
-function login(redirectUri: string) {
-
-  console.log(redirectUri);
+async function login(redirectUri: string) {
+  const response = await fetch('/api/authenticate', { method: 'post' });
+  const clientId = await response.text();
 
   const state = generateRandomString(15);
-  const url = 'https://accounts.spotify.com/authorize?client_id=' + CLIENT_ID +
+  const url = 'https://accounts.spotify.com/authorize?client_id=' + clientId +
 		'&response_type=token' +
 		'&scope=' + encodeURIComponent(SCOPES.join(' ')) +
 		'&redirect_uri=' + encodeURIComponent(redirectUri) +
