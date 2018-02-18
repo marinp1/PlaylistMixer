@@ -1,6 +1,8 @@
 import * as React from 'react';
 import glamorous from 'glamorous';
 
+import AppInfo from './AppInfo';
+
 const SCOPES = ['user-read-private',
   'playlist-read-private', 'playlist-read-collaborative',
   'playlist-modify-public', 'playlist-modify-private',
@@ -49,15 +51,44 @@ const LoginButton = glamorous.img({
   cursor: 'pointer',
 });
 
-const LoginForm: React.SFC<{redirectUri: string}> = ({ redirectUri }) => (
-  <div className="container">
-    <LoginContainer>
-      <Title>PLAYLISTMIXER</Title>
-      <Subtitle>A Spotify web application</Subtitle>
-      <LoginButton src={require('./images/log_in-desktop-large.png')}
-        onClick={e => login(redirectUri)}/>
-    </LoginContainer>
-  </div>
-);
+interface LoginFormProps {
+  redirectUri: string;
+}
+
+interface LoginFormState {
+  appInfoOpen: boolean;
+}
+
+class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
+
+  constructor(props: LoginFormProps) {
+    super(props);
+    this.state = {
+      appInfoOpen: true,
+    };
+    this.toggleInfoVisibility = this.toggleInfoVisibility.bind(this);
+  }
+
+  toggleInfoVisibility() {
+    this.setState({ appInfoOpen: !this.state.appInfoOpen });
+  }
+
+  render() {
+    return (
+      <div>
+        <div className="container">
+          <LoginContainer>
+            <Title>PLAYLISTMIXER</Title>
+            <Subtitle>A Spotify web application</Subtitle>
+            <LoginButton src={require('./images/log_in-desktop-large.png')}
+              onClick={e => login(this.props.redirectUri)}/>
+          </LoginContainer>
+        </div>
+        <AppInfo visibility={this.state.appInfoOpen} closeInfo={this.toggleInfoVisibility}/>
+      </div>
+    );
+  }
+
+}
 
 export default LoginForm;
