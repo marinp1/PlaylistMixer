@@ -1,6 +1,5 @@
 import * as React from 'react';
 import glamorous from 'glamorous';
-import { css } from 'glamor';
 import { mediaQueries } from './styles';
 
 const Container = glamorous.div({
@@ -54,20 +53,6 @@ const FooterPart = glamorous.div({
     position: 'absolute',
     right: 0,
   },
-
-});
-
-const buttonStyles = css({
-  position: 'absolute',
-  right: 0,
-  top: 0,
-  ':hover': {
-    cursor: 'pointer',
-    opacity: '0.7',
-  },
-  [mediaQueries.tablet]: {
-    display: 'none !important',
-  },
 });
 
 const Header = glamorous.div({
@@ -81,13 +66,12 @@ const Header = glamorous.div({
 });
 
 // tslint:disable max-line-length
-const AppInfo: React.SFC<{visibility: boolean, closeInfo: () => void}> = ({ visibility, closeInfo }) => {
+const AppInfo = () => {
 
   return (
     <div>
     <Container>
       <Header>
-        <i { ...buttonStyles} className="fa fa-times fa-lg" aria-hidden="true" onClick={e => closeInfo()}></i>
         <h6>APPLICATION INFORMATION</h6>
       </Header>
       <div style={{ marginBottom: '4rem' }}>
