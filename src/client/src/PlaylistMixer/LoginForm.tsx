@@ -57,7 +57,7 @@ const LoginButton = glamorous.img({
 });
 
 const LoginForm: React.SFC<{ redirectUri: string }> = ({ redirectUri }) => (
-  <div>
+  <React.Fragment>
     <div className="container">
       <LoginContainer>
         <Title>PLAYLISTMIXER</Title>
@@ -67,7 +67,7 @@ const LoginForm: React.SFC<{ redirectUri: string }> = ({ redirectUri }) => (
       </LoginContainer>
     </div>
     <AppInfo/>
-  </div>
+  </React.Fragment>
 );
 
 export default LoginForm;

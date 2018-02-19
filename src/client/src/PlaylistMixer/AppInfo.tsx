@@ -65,11 +65,16 @@ const Header = glamorous.div({
   },
 });
 
-// tslint:disable max-line-length
-const AppInfo = () => {
+const Link = glamorous.a({
+  textDecoration: 'none',
+  ':hover': {
+    textDecoration: 'underline',
+  },
+});
 
-  return (
-    <div>
+// tslint:disable max-line-length
+const AppInfo = () => (
+  <React.Fragment>
     <Container>
       <Header>
         <h6>APPLICATION INFORMATION</h6>
@@ -77,36 +82,35 @@ const AppInfo = () => {
       <div style={{ marginBottom: '4rem' }}>
         <InfoPart>
           <p>
-            I created this application in order to combine my own playlists together and play music from different playlists more easily. Since Spotify had killed its desktop API, I had to create a web application. Uses <a href="https://developer.spotify.com/web-api/">Spotify's Web API</a> and the awesome <a href="http://getskeleton.com/">Skeleton CSS Boilerplate</a> for initial responsive layout.
+            I created this application in order to combine my own playlists together and play music from different playlists more easily. Since Spotify had killed its desktop API, I had to create a web application. Uses <Link href="https://developer.spotify.com/web-api/">Spotify's Web API</Link> handle requests and the awesome <Link href="http://getskeleton.com/">Skeleton CSS Boilerplate</Link> for initial responsive layout.
           </p>
           <p>
             Initially this application was created a few years ago, but in late 2017 I recreated the application with React + TypeScript in order to be more maintainable and reliable. At the same time I also added a way to resolve duplicate songs from the newly generated playlists, so this can also be used to remove duplicate songs from a single playlist if so desired.
           </p>
           <p>
-            Source available at <a href="https://github.com/marinp1/PlaylistMixer">GitHub</a>.
+            Source available at <Link href="https://github.com/marinp1/PlaylistMixer">GitHub</Link>.
           </p>
         </InfoPart>
         <InfoPart>
           <h6>PRIVACY NOTICE</h6>
           <p>
-            This application makes API calls client side so no user data is sent to any external servers. Only application's client ID is fetched from server's environment variables.
+            This application makes API calls client side so no user data is sent to any external servers. Only application's client ID is fetched from server's environment variables. Authorization is handled with <Link href="https://developer.spotify.com/web-api/authorization-guide/#implicit_grant_flow">implicit grant flow</Link>, meaning that the generated access tokens will be valid only for a short time (~10 minutes).
           </p>
           <p>
             I've however enabled Google analytics for this page for monitoring application usage.
           </p>
           <p>
-            There's no HTTPS connection for the application from <a href="http://www.playlistmixer.patrikmarin.fi">http://www.playlistmixer.patrikmarin.fi</a> because SSL certificates for custom domains are simply expensive. For HTTPS enabled site, visit the app's <a href="https://spotify-playlistmixer.herokuapp.com">Heroku URL</a>.
+            There's no HTTPS connection for the application from <Link href="http://www.playlistmixer.patrikmarin.fi">http://www.playlistmixer.patrikmarin.fi</Link> because SSL certificates for custom domains are simply expensive. For HTTPS enabled site, visit the app's <Link href="https://spotify-playlistmixer.herokuapp.com">Heroku URL</Link>.
           </p>
         </InfoPart>
       </div>
     </Container>
     <FooterPart>
       <p style={{ color: '#bbb' }}>
-        Made with joy by <a href="https://www.patrikmarin.fi">Patrik Marin</a>
+        Made with joy by <Link href="https://www.patrikmarin.fi">Patrik Marin</Link>
       </p>
     </FooterPart>
-    </div>
-  );
-};
+  </React.Fragment>
+);
 
 export default AppInfo;
