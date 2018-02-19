@@ -100,9 +100,6 @@ const AppInfo = () => (
           <p>
             I've however enabled Google analytics for this page for monitoring application usage.
           </p>
-          <p>
-            There's no HTTPS connection for the application from <Link href="http://www.playlistmixer.patrikmarin.fi">http://www.playlistmixer.patrikmarin.fi</Link> because SSL certificates for custom domains are simply expensive. For HTTPS enabled site, visit the app's <Link href="https://spotify-playlistmixer.herokuapp.com">Heroku URL</Link>.
-          </p>
         </InfoPart>
       </div>
     </Container>
