@@ -1,7 +1,7 @@
 import * as React from 'react';
 import glamorous from 'glamorous';
 import { Playlist } from './classes';
-import { mediaQueries } from './styles';
+import { mediaQueries } from '../styles';
 import { timeToString } from './helpers';
 
 const COMPONENT_SIZE = 6; // rem

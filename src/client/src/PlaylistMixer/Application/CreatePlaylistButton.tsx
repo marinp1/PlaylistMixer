@@ -1,6 +1,6 @@
 import * as React from 'react';
 import glamorous from 'glamorous';
-import { mediaQueries } from './styles';
+import { mediaQueries } from '../styles';
 
 const createImage = require('../images/create_playlist-green.png');
 
