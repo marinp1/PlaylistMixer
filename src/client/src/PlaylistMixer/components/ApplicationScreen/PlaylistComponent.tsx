@@ -1,11 +1,14 @@
 import * as React from 'react';
 import glamorous from 'glamorous';
-import { Playlist } from './classes';
-import { mediaQueries } from '../styles';
-import { timeToString } from './helpers';
+import { Playlist } from '../../../spotify/classes';
+import { mediaQueries } from '../../styles';
+import { timeToString } from '../../../spotify/helpers';
 
 const COMPONENT_SIZE = 6; // rem
 const COMPONENT_PADDING = 1; // rem
+
+
+const playlistPlaceholderUrl = require('../../images/playlist.png');
 
 const Wrapper = glamorous.div({
   boxSizing: 'border-box',
@@ -97,11 +100,19 @@ interface PlaylistComponentProps {
   handleSelection: (playlist: Playlist) => void;
 }
 
-class PlaylistComponent extends React.Component<PlaylistComponentProps, {selected: boolean}> {
+interface PlaylistComponentState {
+  selected: boolean;
+  imageLoaded: boolean;
+}
+
+class PlaylistComponent extends React.Component<PlaylistComponentProps, PlaylistComponentState> {
 
   constructor(props: PlaylistComponentProps) {
     super(props);
-    this.state = { selected: false };
+    this.state = {
+      selected: false,
+      imageLoaded: false,
+    };
     this.handleClick = this.handleClick.bind(this);
   }
 
@@ -113,19 +124,26 @@ class PlaylistComponent extends React.Component<PlaylistComponentProps, {selecte
   }
 
   render() {
+
     const loading = this.props.data.runtime === -1;
     const extraStyle: React.CSSProperties = {};
+
     if (loading) {
       extraStyle.background = '#b1b1b1';
     } else {
       extraStyle.cursor = 'pointer';
     }
+
+    const imageExtraStyle = !this.state.imageLoaded ? { display: 'none' } : { };
+
     return (
       <Wrapper>
         <Container style={extraStyle} onClick={e => this.handleClick(this.props.data)}>
           {this.state.selected && <Selector/>}
           <ImageContainer>
-            <img src={this.props.data.imageUrl}/>
+            {!this.state.imageLoaded && <img src={playlistPlaceholderUrl}/>}
+            <img style={imageExtraStyle} src={this.props.data.imageUrl}
+              onLoad={ () => this.setState({ imageLoaded: true }) }/>
           </ImageContainer>
           <div style={{ overflow: 'hidden' }}>
             <Title>{this.props.data.name}</Title>

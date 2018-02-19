@@ -2,16 +2,17 @@ import * as React from 'react';
 import glamorous from 'glamorous';
 import { toast, ToastContainer, ToastOptions } from 'react-toastify';
 
-import { getUserId, getUserPlaylists, getPlaylistTracks, createPlaylist } from './spotify';
-import { Playlist, User, Track } from './classes';
-import { getUniquetracks, TrackPair, ResolveResult } from './helpers';
-
 import Loader from './Loader';
 import PlaylistComponent from './PlaylistComponent';
 import StatusTextComponent from './StatusTextComponent';
 import UnsureResolver from './UnsureResolver';
 import CreatePlaylistButton from './CreatePlaylistButton';
 import ResolveDuplicatesButton from './ResolveDuplicatesButton';
+
+import { getUserId, getUserPlaylists,
+  getPlaylistTracks, createPlaylist } from '../../../spotify/api';
+import { Playlist, User, Track } from '../../../spotify/classes';
+import { getUniquetracks, TrackPair, ResolveResult } from '../../../spotify/helpers';
 
 const Title = glamorous.h5({
   letterSpacing: '0.2rem',
@@ -52,7 +53,7 @@ interface ApplicationState {
   searchValue: string;
 }
 
-class Application extends React.Component<ApplicationProps, ApplicationState> {
+class ApplicationScreen extends React.Component<ApplicationProps, ApplicationState> {
 
   initialStateValue: ApplicationState = {
     user: undefined,
@@ -263,4 +264,4 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
   }
 }
 
-export default Application;
+export default ApplicationScreen;

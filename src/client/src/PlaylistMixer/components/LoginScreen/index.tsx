@@ -1,7 +1,7 @@
 import * as React from 'react';
 import glamorous from 'glamorous';
 
-import { mediaQueries } from './styles';
+import { mediaQueries } from '../../styles';
 
 import AppInfo from './AppInfo';
 
@@ -56,13 +56,13 @@ const LoginButton = glamorous.img({
   cursor: 'pointer',
 });
 
-const LoginForm: React.SFC<{ redirectUri: string }> = ({ redirectUri }) => (
+const LoginScreen: React.SFC<{ redirectUri: string }> = ({ redirectUri }) => (
   <React.Fragment>
     <div className="container">
       <LoginContainer>
         <Title>PLAYLISTMIXER</Title>
         <Subtitle>A Spotify web application</Subtitle>
-        <LoginButton src={require('./images/log_in-desktop-large.png')}
+        <LoginButton src={require('../../images/log_in-desktop-large.png')}
           onClick={e => login(redirectUri)}/>
       </LoginContainer>
     </div>
@@ -70,4 +70,4 @@ const LoginForm: React.SFC<{ redirectUri: string }> = ({ redirectUri }) => (
   </React.Fragment>
 );
 
-export default LoginForm;
+export default LoginScreen;

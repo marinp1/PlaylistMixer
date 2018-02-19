@@ -1,7 +1,7 @@
 import * as React from 'react';
 import glamorous from 'glamorous';
-import { Playlist, Track } from './classes';
-import { timeToString } from './helpers';
+import { Playlist, Track } from '../../../spotify/classes';
+import { timeToString } from '../../../spotify/helpers';
 
 const StatusText = glamorous.p({
   margin: 0,

@@ -1,6 +1,4 @@
-/// <reference path="../../../node_modules/spotify-web-api-js/src/typings/spotify-api.d.ts" />
-
-const playlistPlaceholderImg = require('../images/playlist.png');
+/// <reference path="../../node_modules/spotify-web-api-js/src/typings/spotify-api.d.ts" />
 
 export class User {
   id: string;
@@ -18,7 +16,7 @@ export class Album {
   imageUrl: string;
   constructor(data: SpotifyApi.AlbumObjectSimplified) {
     this.name = data.name;
-    this.imageUrl = (data.images.length > 0) ? data.images[0].url : playlistPlaceholderImg;
+    this.imageUrl = (data.images.length > 0) ? data.images[0].url : '';
   }
 }
 

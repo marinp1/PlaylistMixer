@@ -1,6 +1,7 @@
 import * as React from 'react';
 import glamorous from 'glamorous';
-import { mediaQueries } from './styles';
+
+import { mediaQueries } from '../../styles';
 
 const Container = glamorous.div({
   background: 'whitesmoke',

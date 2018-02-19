@@ -1,8 +1,10 @@
 import * as React from 'react';
 import glamorous from 'glamorous';
-import { Track } from './classes';
-import { mediaQueries } from '../styles';
-import { TrackPair, ResolveResult } from './helpers';
+
+import { mediaQueries } from '../../styles';
+
+import { Track } from '../../../spotify/classes';
+import { TrackPair, ResolveResult } from '../../../spotify/helpers';
 
 const TrackPairContainer = glamorous.div({
   paddingTop: '1rem',

@@ -1,7 +1,7 @@
 import * as React from 'react';
-import LoginForm from './LoginForm';
-import ErrorScreen from './ErrorScreen';
-import Application from './Application';
+import LoginScreen from './components/LoginScreen';
+import ErrorScreen from './components/ErrorScreen';
+import ApplicationScreen from './components/ApplicationScreen';
 
 function parseHashString(hash: string): Map<string, string> {
   const hashMap = new Map<string,string>();
@@ -56,13 +56,13 @@ class PlaylistMixer extends React.Component<{}, PlaylistMixerState> {
 
     if (!this.state.accessToken) {
       return (
-        <LoginForm
+        <LoginScreen
           redirectUri={window.location.origin + window.location.pathname}/>
       );
     }
 
     return (
-      <Application
+      <ApplicationScreen
         accessToken={this.state.accessToken}
         errorHandler={this.errorHandling}/>
     );
